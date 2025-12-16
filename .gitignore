@@ -1,3 +1,11 @@
+# Local editor and helper scripts
+editor.html
+open-editor.bat
+untrack-editor.bat
+
+# Node / Python caches (if any added later)
+__pycache__/
+*.pyc
 # OS files
 .DS_Store
 Thumbs.db
