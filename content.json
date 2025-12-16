@@ -1,0 +1,43 @@
+{
+  "teamNumber": "#33678",
+  "teamName": "Tezukayama-Rise",
+  "heroTitle": "Tezukayama-Rise",
+  "heroSubtitle": "FIRST Tech Challenge Team #33678",
+  "heroDescription": "革新と協働で未来を創る<br>ロボット工学を通じて、技術力と人間性を育む",
+  "aboutTitle": "チームについて",
+  "aboutMission": {
+    "title": "私たちのミッション",
+    "text": "FIRST Tech Challengeを通じて、ロボット工学、プログラミング、エンジニアリングデザインのスキルを磨き、次世代のイノベーターを育成します。"
+  },
+  "aboutValues": {
+    "title": "チームの価値観",
+    "text": "協力、革新、Gracious Professionalismを核として、技術力だけでなく、チームワークとコミュニケーション能力を重視しています。"
+  },
+  "aboutGoals": {
+    "title": "私たちの目標",
+    "text": "競技での成功だけでなく、地域社会への貢献とSTEM教育の普及を通じて、より良い社会を創造することを目指しています。"
+  },
+  "about": {
+    "cards": [
+      { "icon": "🤖", "title": "私たちのミッション", "text": "FIRST Tech Challengeを通じて、ロボット工学、プログラミング、エンジニアリングデザインのスキルを磨き、次世代のイノベーターを育成します。" },
+      { "icon": "🌟", "title": "チームの価値観", "text": "協力、革新、Gracious Professionalismを核として、技術力だけでなく、チームワークとコミュニケーション能力を重視しています。" },
+      { "icon": "🎯", "title": "私たちの目標", "text": "競技での成功だけでなく、地域社会への貢献とSTEM教育の普及を通じて、より良い社会を創造することを目指しています。" }
+    ]
+  },
+  "outreach": {
+    "cards": [
+      { "title": "STEM教育ワークショップ", "text": "小中学生を対象としたプログラミングとロボット工学の体験会を定期的に開催しています。", "imageUrl": "" },
+      { "title": "コミュニティイベント", "text": "3Dプリンター教室を開催し、地域のSTEMコミュニティを盛り上げています。" },
+      { "title": "他チームとの協力", "text": "他のFTCチームと知識や経験を共有し、コミュニティ全体の成長をサポートしています。" }
+    ]
+  },
+  "contact": {
+    "email": { "title": "メール", "text": "Coming soon" },
+    "social": { "title": "ソーシャルメディア", "text": "SNSでチームの最新情報をチェック" },
+    "team": { "title": "チーム番号", "text": "#33678" }
+  },
+  "footer": {
+    "teamName": "Tezukayama-Rise",
+    "copy": "&copy; 2024 Tezukayama-Rise FTC Team #33678. All rights reserved."
+  }
+}

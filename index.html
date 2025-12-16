@@ -15,8 +15,8 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <span class="team-number">#33678</span>
-                <span class="team-name">Tezukayama-Rise</span>
+                <span id="team-number" class="team-number">#33678</span>
+                <span id="team-name" class="team-name">Tezukayama-Rise</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">ホーム</a></li>
@@ -31,11 +31,11 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="gradient-text">Tezukayama-Rise</span>
+                <h1 id="hero-title" class="hero-title">
+                    <span id="hero-title-text" class="gradient-text">Tezukayama-Rise</span>
                 </h1>
-                <p class="hero-subtitle">FIRST Tech Challenge Team #33678</p>
-                <p class="hero-description">
+                <p id="hero-subtitle" class="hero-subtitle">FIRST Tech Challenge Team #33678</p>
+                <p id="hero-description" class="hero-description">
                     革新と協働で未来を創る<br>
                     ロボット工学を通じて、技術力と人間性を育む
                 </p>
@@ -55,23 +55,9 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">チームについて</h2>
-            <div class="about-content">
-                <div class="about-card">
-                    <div class="card-icon">🤖</div>
-                    <h3>私たちのミッション</h3>
-                    <p>FIRST Tech Challengeを通じて、ロボット工学、プログラミング、エンジニアリングデザインのスキルを磨き、次世代のイノベーターを育成します。</p>
-                </div>
-                <div class="about-card">
-                    <div class="card-icon">🌟</div>
-                    <h3>チームの価値観</h3>
-                    <p>協力、革新、Gracious Professionalismを核として、技術力だけでなく、チームワークとコミュニケーション能力を重視しています。</p>
-                </div>
-                <div class="about-card">
-                    <div class="card-icon">🎯</div>
-                    <h3>私たちの目標</h3>
-                    <p>競技での成功だけでなく、地域社会への貢献とSTEM教育の普及を通じて、より良い社会を創造することを目指しています。</p>
-                </div>
+            <h2 id="about-title" class="section-title">チームについて</h2>
+            <div id="about-content" class="about-content">
+                <!-- About cards will be rendered dynamically from content.json. If content.json does not provide about.cards, script.js will fall back to the older static fields. -->
             </div>
         </div>
     </section>
@@ -117,22 +103,8 @@
         <div class="container">
             <h2 class="section-title">アウトリーチ活動</h2>
             <p class="section-subtitle">地域社会とSTEM教育への貢献</p>
-            <div class="outreach-grid">
-                <div class="outreach-card">
-                    <div class="outreach-icon">📚</div>
-                    <h3>STEM教育ワークショップ</h3>
-                    <p>小中学生を対象としたプログラミングとロボット工学の体験会を定期的に開催し、次世代の技術者育成に貢献しています。</p>
-                </div>
-                <div class="outreach-card">
-                    <div class="outreach-icon">👥</div>
-                    <h3>コミュニティイベント</h3>
-                    <p>3Dプリンター教室を開催し、地域のSTEMコミュニティを盛り上げています。</p>
-                </div>
-                <div class="outreach-card">
-                    <div class="outreach-icon">🤝</div>
-                    <h3>他チームとの協力</h3>
-                    <p>他のFTCチームと知識や経験を共有し、コミュニティ全体の成長をサポートしています。</p>
-                </div>
+            <div id="outreach-grid" class="outreach-grid">
+                <!-- Outreach cards are rendered dynamically from content.json -->
             </div>
         </div>
     </section>
@@ -144,27 +116,27 @@
             <p class="section-subtitle">ご質問やご相談がございましたら、お気軽にお問い合わせください</p>
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <span class="contact-icon">📧</span>
-                        <div>
-                            <h4>メール</h4>
-                            <p>Coming soon</p>
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <div>
+                                <h4 id="contact-email-title">メール</h4>
+                                <p id="contact-email-text">Coming soon</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-icon">📱</span>
-                        <div>
-                            <h4>ソーシャルメディア</h4>
-                            <p>SNSでチームの最新情報をチェック</p>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <div>
+                                <h4 id="contact-social-title">ソーシャルメディア</h4>
+                                <p id="contact-social-text">SNSでチームの最新情報をチェック</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <span class="contact-icon">🏆</span>
-                        <div>
-                            <h4>チーム番号</h4>
-                            <p>#33678</p>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏆</span>
+                            <div>
+                                <h4 id="contact-team-title">チーム番号</h4>
+                                <p id="contact-team-text">#33678</p>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -175,8 +147,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-info">
-                    <h3>Tezukayama-Rise</h3>
-                    <p>FIRST Tech Challenge Team #33678</p>
+                    <h3 id="footer-team">Tezukayama-Rise</h3>
+                    <p id="footer-copy">FIRST Tech Challenge Team #33678</p>
                 </div>
                 <div class="footer-links">
                     <a href="#home">ホーム</a>

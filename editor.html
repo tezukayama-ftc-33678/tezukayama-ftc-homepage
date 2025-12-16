@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>コンテンツ編集 — Tezukayama-Rise (ローカル専用)</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:20px;background:#f6f8fb}
+    h1{font-size:1.4rem}
+    .box{background:#fff;padding:16px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px}
+    label{display:block;margin-top:8px;font-weight:600}
+    input[type=text], textarea, select{width:100%;padding:8px;margin-top:6px;border:1px solid #ddd;border-radius:6px}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    button{padding:8px 12px;border-radius:6px;border:none;background:#4f46e5;color:#fff;cursor:pointer}
+    button.ghost{background:#fff;color:#111;border:1px solid #ddd}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+    .card-edit{background:#fafafa;padding:10px;border-radius:8px;border:1px dashed #e5e7eb}
+    .small{font-size:0.9rem;padding:6px 8px}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    .danger{background:#ef4444}
+    .ok{background:#10b981}
+    .muted{color:#6b7280;font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <h1>Tezukayama-Rise コンテンツ編集（ローカル専用）</h1>
+  <p class="muted">このページはローカルで `content.json` を編集しやすくするための簡易UIです。公開リポジトリでの実行は推奨しません。</p>
+
+  <div class="box" id="main-controls">
+    <div class="row">
+      <button id="loadBtn">content.json を読み込む</button>
+      <input id="uploadFile" type="file" accept="application/json" style="margin-left:8px">
+      <button id="resetBtn" class="ghost">編集をリセット</button>
+      <button id="downloadBtn" class="ok">JSON をダウンロード</button>
+    </div>
+    <div class="actions">
+      <button id="previewBtn" class="ghost">プレビュー (index を新しいタブで開く)</button>
+      <button id="validateBtn" class="ghost">簡易検証</button>
+    </div>
+  </div>
+
+  <div id="editor" style="display:none">
+    <div class="box">
+      <h2>ヘッダー / ヒーロー</h2>
+      <label>チーム番号</label>
+      <input type="text" id="teamNumber">
+      <label>チーム名</label>
+      <input type="text" id="teamName">
+      <label>ヒーロータイトル</label>
+      <input type="text" id="heroTitle">
+      <label>ヒーローサブタイトル</label>
+      <input type="text" id="heroSubtitle">
+      <label>ヒーロー説明 (HTML の簡易タグ可)</label>
+      <textarea id="heroDescription" rows="3"></textarea>
+    </div>
+
+    <div class="box">
+      <h2>About セクション</h2>
+      <label>セクションタイトル</label>
+      <input type="text" id="aboutTitle">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <strong>カード一覧</strong>
+        <div>
+          <button id="addAboutCard" class="small">+ カードを追加</button>
+        </div>
+      </div>
+      <div id="aboutCards" class="cards"></div>
+    </div>
+
+    <div class="box">
+      <h2>追加セクション（任意）</h2>
+      <p class="muted">自由にセクションを作り、カードを追加できます。セクションは `sections` 配列として保存されます。</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <strong>セクション一覧</strong>
+        <div>
+          <button id="addSection" class="small">+ セクションを追加</button>
+        </div>
+      </div>
+      <div id="sectionsContainer"></div>
+    </div>
+
+    <div class="box">
+      <h2>Outreach セクション</h2>
+      <label>セクションタイトル</label>
+      <input type="text" id="outreachTitle" value="アウトリーチ活動">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <strong>カード一覧</strong>
+        <div>
+          <button id="addOutreachCard" class="small">+ カードを追加</button>
+        </div>
+      </div>
+      <div id="outreachCards" class="cards"></div>
+    </div>
+
+    <div class="box">
+      <h2>Contact / Footer（簡易）</h2>
+      <label>メールタイトル</label>
+      <input id="contactEmailTitle" type="text">
+      <label>メールテキスト</label>
+      <input id="contactEmailText" type="text">
+      <label>Footer コピー</label>
+      <input id="footerCopy" type="text">
+    </div>
+  </div>
+
+  <script>
+    let content = null;
+    const safeCheck = str => /<script\b|onerror=|onload=|javascript:/i.test(str);
+
+    document.getElementById('loadBtn').addEventListener('click', async ()=>{
+      try{
+        const r = await fetch('content.json');
+        const j = await r.json();
+        content = j;
+        populateForm(j);
+        document.getElementById('editor').style.display = 'block';
+        alert('読み込み完了');
+      }catch(e){
+        alert('content.json の読み込みに失敗しました。ローカルサーバーで実行してください。');
+        console.error(e);
+      }
+    });
+
+    // Upload JSON file and load into editor
+    document.getElementById('uploadFile').addEventListener('change', async (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      try{
+        const text = await f.text();
+        const j = JSON.parse(text);
+        content = j;
+        populateForm(j);
+        document.getElementById('editor').style.display = 'block';
+        alert('アップロードと読み込みが完了しました');
+      }catch(err){
+        alert('ファイルの読み込みまたはパースに失敗しました');
+        console.error(err);
+      }
+    });
+
+    document.getElementById('previewBtn').addEventListener('click', ()=>{
+      window.open('index.html','_blank');
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      if (!content) return alert('まだ読み込まれていません');
+      populateForm(content);
+    });
+
+    document.getElementById('validateBtn').addEventListener('click', ()=>{
+      const j = gatherForm();
+      const issues = validateJSON(j);
+      if (issues.length===0) alert('問題ありません');
+      else alert('検出された問題:\n- '+issues.join('\n- '));
+    });
+
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const j = gatherForm();
+      const issues = validateJSON(j);
+      if (issues.length>0){
+        if (!confirm('検出された問題があります。ダウンロードしてもよいですか?\n- '+issues.join('\n- '))) return;
+      }
+      const blob = new Blob([JSON.stringify(j,null,2)],{type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'content.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    function createCardEditor(container, card, onRemove){
+      const el = document.createElement('div'); el.className='card-edit';
+      const icon = document.createElement('input'); icon.type='text'; icon.value = card.icon || '';
+      const title = document.createElement('input'); title.type='text'; title.value=card.title||'';
+      const text = document.createElement('textarea'); text.rows=4; text.value=card.text||'';
+      const imageUrl = document.createElement('input'); imageUrl.type='text'; imageUrl.placeholder='画像のURL（任意）'; imageUrl.value = card.imageUrl || '';
+      const uploadImg = document.createElement('input'); uploadImg.type='file'; uploadImg.accept='image/*'; uploadImg.style.marginTop='6px';
+      uploadImg.addEventListener('change', async (e)=>{
+        const f = e.target.files && e.target.files[0]; if(!f) return;
+        const reader = new FileReader();
+        reader.onload = ()=>{ imageUrl.value = reader.result; };
+        reader.readAsDataURL(f);
+      });
+      const removeBtn = document.createElement('button'); removeBtn.textContent='削除'; removeBtn.className='small danger';
+      removeBtn.addEventListener('click', ()=>{ el.remove(); if(onRemove) onRemove(); });
+      el.appendChild(document.createTextNode('アイコン')); el.appendChild(icon);
+      el.appendChild(document.createTextNode('タイトル')); el.appendChild(title);
+      el.appendChild(document.createTextNode('本文 (HTML可)')); el.appendChild(text);
+      el.appendChild(document.createTextNode('画像URL (任意)')); el.appendChild(imageUrl);
+      el.appendChild(document.createTextNode('画像アップロード')); el.appendChild(uploadImg);
+      el.appendChild(removeBtn);
+      // attach getters
+      el.getCard = ()=>({icon:icon.value.trim(),title:title.value.trim(),text:text.value.trim(), imageUrl: imageUrl.value.trim() || undefined});
+      container.appendChild(el);
+      return el;
+    }
+
+    function populateForm(j){
+      document.getElementById('teamNumber').value = j.teamNumber || '';
+      document.getElementById('teamName').value = j.teamName || '';
+      document.getElementById('heroTitle').value = j.heroTitle || '';
+      document.getElementById('heroSubtitle').value = j.heroSubtitle || '';
+      document.getElementById('heroDescription').value = j.heroDescription || '';
+
+      document.getElementById('aboutTitle').value = j.aboutTitle || '';
+      const aboutContainer = document.getElementById('aboutCards'); aboutContainer.innerHTML='';
+      const aboutCards = (j.about && Array.isArray(j.about.cards)) ? j.about.cards : [
+        {icon:'🤖',title:(j.aboutMission && j.aboutMission.title)||'',text:(j.aboutMission && j.aboutMission.text)||''},
+        {icon:'🌟',title:(j.aboutValues && j.aboutValues.title)||'',text:(j.aboutValues && j.aboutValues.text)||''},
+        {icon:'🎯',title:(j.aboutGoals && j.aboutGoals.title)||'',text:(j.aboutGoals && j.aboutGoals.text)||''}
+      ];
+      aboutCards.forEach(c=>createCardEditor(aboutContainer,c));
+
+      document.getElementById('outreachTitle').value = (j.outreach && j.outreach.title) || 'アウトリーチ活動';
+      const outContainer = document.getElementById('outreachCards'); outContainer.innerHTML='';
+      const outreachCards = (j.outreach && Array.isArray(j.outreach.cards))? j.outreach.cards : [];
+      outreachCards.forEach(c=>createCardEditor(outContainer,c));
+
+      document.getElementById('contactEmailTitle').value = (j.contact && j.contact.email && j.contact.email.title) || '';
+      document.getElementById('contactEmailText').value = (j.contact && j.contact.email && j.contact.email.text) || '';
+      document.getElementById('footerCopy').value = (j.footer && j.footer.copy) || '';
+    }
+
+    document.getElementById('addAboutCard').addEventListener('click', ()=>{
+      createCardEditor(document.getElementById('aboutCards'),{icon:'📌',title:'新しいカード',text:''});
+    });
+    document.getElementById('addOutreachCard').addEventListener('click', ()=>{
+      createCardEditor(document.getElementById('outreachCards'),{icon:'📚',title:'新しいカード',text:''});
+    });
+
+    // Sections (arbitrary) support
+    function createSectionEditor(section){
+      const container = document.getElementById('sectionsContainer');
+      const wrapper = document.createElement('div'); wrapper.className='card-edit';
+      const keyInput = document.createElement('input'); keyInput.type='text'; keyInput.placeholder='section_key (例: events)'; keyInput.value = section.key||'';
+      const titleInput = document.createElement('input'); titleInput.type='text'; titleInput.placeholder='表示タイトル'; titleInput.value = section.title||'';
+      const navPosLabel = document.createElement('div'); navPosLabel.textContent='ナビ挿入位置 (任意)'; navPosLabel.style.marginTop='6px';
+      const navPosSelect = document.createElement('select'); navPosSelect.className='small';
+      ['none','start','end','index'].forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; if(section.navPosition===v) o.selected=true; navPosSelect.appendChild(o)});
+      const navIndexInput = document.createElement('input'); navIndexInput.type='number'; navIndexInput.placeholder='index (0-based)'; navIndexInput.value = section.navIndex!=null? section.navIndex : '';
+      navIndexInput.style.display = (navPosSelect.value==='index') ? 'inline-block' : 'none';
+      navPosSelect.addEventListener('change', ()=>{ navIndexInput.style.display = (navPosSelect.value==='index') ? 'inline-block' : 'none'; });
+      const cardsContainer = document.createElement('div'); cardsContainer.style.marginTop='8px';
+      const addCardBtn = document.createElement('button'); addCardBtn.className='small'; addCardBtn.textContent='+ カード追加';
+      addCardBtn.addEventListener('click', ()=> createCardEditor(cardsContainer,{icon:'📌',title:'新しいカード',text:''}));
+      const removeBtn = document.createElement('button'); removeBtn.className='small danger'; removeBtn.textContent='セクション削除'; removeBtn.addEventListener('click', ()=> wrapper.remove());
+
+      wrapper.appendChild(document.createTextNode('セクションキー')); wrapper.appendChild(keyInput);
+      wrapper.appendChild(document.createTextNode('セクションタイトル')); wrapper.appendChild(titleInput);
+      const secImageLabel = document.createElement('div'); secImageLabel.textContent='セクション画像 (任意)';
+      const secImageInput = document.createElement('input'); secImageInput.type='text'; secImageInput.placeholder='画像URL'; secImageInput.value = section.imageUrl || '';
+      const secImageUpload = document.createElement('input'); secImageUpload.type='file'; secImageUpload.accept='image/*';
+      secImageUpload.addEventListener('change', (e)=>{ const f = e.target.files && e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ secImageInput.value=r.result; }; r.readAsDataURL(f); });
+      wrapper.appendChild(secImageLabel); wrapper.appendChild(secImageInput); wrapper.appendChild(secImageUpload);
+      wrapper.appendChild(navPosLabel); wrapper.appendChild(navPosSelect); wrapper.appendChild(navIndexInput);
+      wrapper.appendChild(addCardBtn);
+      wrapper.appendChild(cardsContainer);
+      wrapper.appendChild(removeBtn);
+
+      // populate existing cards
+      (section.cards||[]).forEach(c=> createCardEditor(cardsContainer,c));
+
+      // attach getter
+      wrapper.getSection = ()=>({ key: keyInput.value.trim(), title: titleInput.value.trim(), cards: Array.from(cardsContainer.children).map(c=>c.getCard()), navPosition: navPosSelect.value==='none'? undefined: navPosSelect.value, navIndex: navIndexInput.value? parseInt(navIndexInput.value,10): undefined, imageUrl: secImageInput.value.trim() || undefined });
+
+      container.appendChild(wrapper);
+      return wrapper;
+    }
+
+    document.getElementById('addSection').addEventListener('click', ()=>{
+      createSectionEditor({key:'new_section',title:'新しいセクション',cards:[]});
+    });
+
+    function gatherForm(){
+      const j = {};
+      j.teamNumber = document.getElementById('teamNumber').value.trim();
+      j.teamName = document.getElementById('teamName').value.trim();
+      j.heroTitle = document.getElementById('heroTitle').value.trim();
+      j.heroSubtitle = document.getElementById('heroSubtitle').value.trim();
+      j.heroDescription = document.getElementById('heroDescription').value.trim();
+
+      j.aboutTitle = document.getElementById('aboutTitle').value.trim();
+      j.about = {cards: Array.from(document.getElementById('aboutCards').children).map(c=>c.getCard())};
+
+      j.outreach = {title: document.getElementById('outreachTitle').value.trim(), cards: Array.from(document.getElementById('outreachCards').children).map(c=>c.getCard())};
+
+      j.contact = { email: { title: document.getElementById('contactEmailTitle').value.trim(), text: document.getElementById('contactEmailText').value.trim() } };
+      j.footer = { copy: document.getElementById('footerCopy').value.trim() };
+      // extra sections
+      const secs = Array.from(document.getElementById('sectionsContainer').children).map(s=> s.getSection && s.getSection()).filter(Boolean);
+      if (secs.length) j.sections = secs;
+      return j;
+    }
+
+    function validateJSON(j){
+      const issues = [];
+      // basic fields
+      if (!j.teamName) issues.push('チーム名が空です');
+      if (!j.heroTitle) issues.push('ヒーロータイトルが空です');
+      // check scripts
+      const checkFields = [j.heroDescription, j.footer.copy];
+      (j.about && j.about.cards||[]).forEach(c=>checkFields.push(c.title,c.text));
+      (j.outreach && j.outreach.cards||[]).forEach(c=>checkFields.push(c.title,c.text));
+      checkFields.forEach(f=>{ if (f && safeCheck(f)) issues.push('禁止タグや属性を検出: '+f.substring(0,60)); });
+      return issues;
+    }
+  </script>
+</body>
+</html>

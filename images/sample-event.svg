@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#667eea" rx="12"/>
+  <g fill="#fff" font-family="Poppins, sans-serif">
+    <text x="50" y="120" font-size="36" font-weight="700">イベントサンプル画像</text>
+    <text x="50" y="180" font-size="18">Tezukayama-Rise — サンプル画像 (SVG)</text>
+  </g>
+  <circle cx="700" cy="70" r="50" fill="#f472b6"/>
+</svg>
