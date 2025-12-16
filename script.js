@@ -48,11 +48,4 @@ document.querySelectorAll('.about-card, .outreach-card, .robot-info, .contact-it
     observer.observe(el);
 });
 
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
-});
+// Page loaded - body opacity handled by CSS initial state
