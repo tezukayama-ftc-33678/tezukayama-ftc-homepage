@@ -164,12 +164,10 @@ function renderOutreach(cards) {
         container.appendChild(cardEl);
     });
 
-    // Observe newly added outreach cards for animation
+    // Show newly added outreach cards immediately
     document.querySelectorAll('#outreach-grid .outreach-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
     });
 }
 
@@ -210,12 +208,10 @@ function renderAbout(cards) {
         container.appendChild(cardEl);
     });
 
-    // Observe newly added about cards for animation
+    // Show newly added about cards immediately
     document.querySelectorAll('#about-content .about-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
     });
 }
 
@@ -283,12 +279,10 @@ function renderSections(sections) {
         root.appendChild(secWrap);
     });
 
-    // Observe added cards
+    // Show added cards immediately
     document.querySelectorAll('#sections-root .outreach-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
     });
 
     // update nav: remove previously generated section links, then add links for current sections
