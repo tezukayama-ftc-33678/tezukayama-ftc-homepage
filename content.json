@@ -26,7 +26,7 @@
   },
   "outreach": {
     "cards": [
-      { "title": "FTCDocs和訳プロジェクト", "text": "FTCDocsの非公式和訳版を公開中です。https://ftcdocs-ja.readthedocs.io/ja/latest/overview/ftcoverview.html（現在誤訳をなどを修正中）", "imageUrl": "" },
+      { "title": "FTCDocs和訳プロジェクト", "text": "FTCDocsの非公式和訳版を<a href=\"https://ftcdocs-ja.readthedocs.io/ja/latest/index.html\" target=\"_blank\">公開中</a>です。（現在誤訳をなどを修正中）", "imageUrl": "" },
       { "title": "STEM教育ワークショップ", "text": "小学生を対象とした3Dプリンター教室を定期的に開催しています。", "imageUrl": "" },
       { "title": "他チームとの協力", "text": "他のFTCチームと知識や経験を共有し、コミュニティ全体の成長をサポートしています。" }
     ]
