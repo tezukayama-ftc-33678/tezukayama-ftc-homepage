@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+  
+  <!-- Robot 1 (Left side) -->
+  <g opacity="0.15" transform="translate(100, 150)">
+    <!-- Head -->
+    <rect x="20" y="0" width="80" height="70" rx="10" fill="#ffffff"/>
+    <!-- Eyes -->
+    <circle cx="40" cy="25" r="8" fill="#667eea"/>
+    <circle cx="80" cy="25" r="8" fill="#667eea"/>
+    <!-- Antenna -->
+    <line x1="60" y1="0" x2="60" y2="-20" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="60" cy="-20" r="5" fill="#ffffff"/>
+    <!-- Body -->
+    <rect x="10" y="75" width="100" height="120" rx="15" fill="#ffffff"/>
+    <!-- Chest panel -->
+    <rect x="30" y="95" width="60" height="40" rx="5" fill="#a5b4fc"/>
+    <!-- Arms -->
+    <rect x="-15" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <rect x="115" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <!-- Legs -->
+    <rect x="25" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <rect x="65" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <!-- Joints -->
+    <circle cx="40" cy="200" r="8" fill="#a5b4fc"/>
+    <circle cx="80" cy="200" r="8" fill="#a5b4fc"/>
+  </g>
+  
+  <!-- Robot 2 (Right side) -->
+  <g opacity="0.12" transform="translate(620, 280) scale(-1, 1)">
+    <!-- Head -->
+    <rect x="20" y="0" width="80" height="70" rx="10" fill="#ffffff"/>
+    <!-- Eyes -->
+    <circle cx="40" cy="25" r="8" fill="#8b5cf6"/>
+    <circle cx="80" cy="25" r="8" fill="#8b5cf6"/>
+    <!-- Antenna -->
+    <line x1="60" y1="0" x2="60" y2="-20" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="60" cy="-20" r="5" fill="#ffffff"/>
+    <!-- Body -->
+    <rect x="10" y="75" width="100" height="120" rx="15" fill="#ffffff"/>
+    <!-- Chest panel -->
+    <rect x="30" y="95" width="60" height="40" rx="5" fill="#c4b5fd"/>
+    <!-- Arms -->
+    <rect x="-15" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <rect x="115" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <!-- Legs -->
+    <rect x="25" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <rect x="65" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <!-- Joints -->
+    <circle cx="40" cy="200" r="8" fill="#c4b5fd"/>
+    <circle cx="80" cy="200" r="8" fill="#c4b5fd"/>
+  </g>
+  
+  <!-- Robot 3 (Center, smaller) -->
+  <g opacity="0.1" transform="translate(350, 80) scale(0.7)">
+    <!-- Head -->
+    <rect x="20" y="0" width="80" height="70" rx="10" fill="#ffffff"/>
+    <!-- Eyes -->
+    <circle cx="40" cy="25" r="8" fill="#764ba2"/>
+    <circle cx="80" cy="25" r="8" fill="#764ba2"/>
+    <!-- Antenna -->
+    <line x1="60" y1="0" x2="60" y2="-20" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="60" cy="-20" r="5" fill="#ffffff"/>
+    <!-- Body -->
+    <rect x="10" y="75" width="100" height="120" rx="15" fill="#ffffff"/>
+    <!-- Chest panel -->
+    <rect x="30" y="95" width="60" height="40" rx="5" fill="#ddd6fe"/>
+    <!-- Arms -->
+    <rect x="-15" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <rect x="115" y="85" width="20" height="80" rx="10" fill="#ffffff"/>
+    <!-- Legs -->
+    <rect x="25" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <rect x="65" y="200" width="30" height="70" rx="8" fill="#ffffff"/>
+    <!-- Joints -->
+    <circle cx="40" cy="200" r="8" fill="#ddd6fe"/>
+    <circle cx="80" cy="200" r="8" fill="#ddd6fe"/>
+  </g>
+  
+  <!-- Gear decorations -->
+  <g opacity="0.08">
+    <circle cx="250" cy="450" r="30" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="250" cy="450" r="20" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <line x1="250" y1="420" x2="250" y2="480" stroke="#ffffff" stroke-width="3"/>
+    <line x1="220" y1="450" x2="280" y2="450" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  
+  <g opacity="0.08">
+    <circle cx="550" cy="100" r="25" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="550" cy="100" r="17" fill="none" stroke="#ffffff" stroke-width="2"/>
+    <line x1="550" y1="75" x2="550" y2="125" stroke="#ffffff" stroke-width="2"/>
+    <line x1="525" y1="100" x2="575" y2="100" stroke="#ffffff" stroke-width="2"/>
+  </g>
+  
+  <!-- Circuit board pattern -->
+  <g opacity="0.06" stroke="#ffffff" stroke-width="2" fill="none">
+    <line x1="50" y1="50" x2="150" y2="50"/>
+    <line x1="150" y1="50" x2="150" y2="100"/>
+    <circle cx="150" cy="100" r="4" fill="#ffffff"/>
+    <line x1="650" y1="500" x2="750" y2="500"/>
+    <line x1="750" y1="500" x2="750" y2="450"/>
+    <circle cx="750" cy="450" r="4" fill="#ffffff"/>
+  </g>
+</svg>
